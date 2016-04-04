@@ -21,8 +21,9 @@
 	</html>
 </xsl:template> 
 
-<xsl:template match="infos">
+<xsl:template match="//infos">
 	<xsl:apply-templates select="titre"/>
+	<xsl:apply-templates select="auteur"/>
 	<blockquote style="color:darkgreen" >
 		<xsl:text>But du TP du </xsl:text>
 		<xsl:value-of select="date"/>
@@ -42,15 +43,16 @@
 	<hr/>
 </xsl:template>
 
-<xsl:template match="titre">
+<xsl:template match="//titre">
 	<h1 style="text-align:center; color:blue;">
 		<xsl:apply-templates/>
 	</h1>
 </xsl:template>
 
-<xsl:template match="//infos/auteur">
+<xsl:template match="//auteur">
 	<h2 style="text-align:center; font-style: italic;">
-		<br/><xsl:value-of select="auteur"/><br/>
+		<xsl:value-of select="auteur"/>
+		<xsl:apply-templates/>
 	</h2>
 </xsl:template>
 
