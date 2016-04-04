@@ -21,6 +21,27 @@
 	</html>
 </xsl:template> 
 
+<xsl:template match="infos">
+	<xsl:apply-templates/>
+	<blockquote style="color:darkgreen" >
+		<xsl:text>But du TP du </xsl:text>
+		<xsl:value-of select="date"/>
+		<xsl:text> : </xsl:text>
+		<xsl:value-of select="but"/>
+		<br/>
+		<!-- TODO : trouver une solution générique pour les auteurs (for each) -->
+		<xsl:text>Premier auteur : </xsl:text>
+		<xsl:value-of select="mise_en_forme_par/auteur[1]"/>
+		<br/>
+		<xsl:text>Deuxième auteur : </xsl:text>
+		<xsl:value-of select="mise_en_forme_par/auteur[2]"/>
+		<br/>
+		<xsl:text>Email du responsable : </xsl:text>
+		<xsl:value-of select="email"/>
+		
+	</blockquote>
+</xsl:template>
+
 <xsl:template match="titre">
 	<h1 style="text-align:center; color:blue;">
 		<xsl:apply-templates/>
@@ -35,5 +56,3 @@
 </xsl:template>
 
 </xsl:stylesheet>
-
-
