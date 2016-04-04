@@ -27,6 +27,13 @@
 	</h1>
 </xsl:template>
 
+<xsl:template match="//infos/auteur">
+	<h2 style="text-align:center; font-style: italic;">
+		<br/><xsl:value-of select="auteur"/><br/>
+		<xsl:apply-templates/>
+	</h2>
+</xsl:template>
+
 </xsl:stylesheet>
 
 
