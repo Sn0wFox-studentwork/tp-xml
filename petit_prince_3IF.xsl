@@ -28,6 +28,8 @@
 		</table>
 		<br/>
 		<hr/>
+		
+		<xsl:apply-templates  select="//paragr[@type='narration'] "/>
 	</body>
 	</html>
 </xsl:template> 
@@ -73,6 +75,24 @@
 		</img>
 		
 	</div>
+</xsl:template> 
+
+<xsl:template match="//paragr[@type='narration'] ">
+	<p>
+		<xsl:for-each select="phrase[@langue='fr']">
+			<span>
+				<xsl:value-of select="phrase"/>
+				<xsl:apply-templates/>
+			</span>
+		</xsl:for-each>
+		<br/>
+		<xsl:for-each select="phrase[@langue='hu']">
+			<span style="color:brown; font-style:italic" >
+				<xsl:value-of select="phrase"/>
+				<xsl:apply-templates/>
+			</span>
+		</xsl:for-each>
+	</p>
 </xsl:template> 
 
 </xsl:stylesheet>
