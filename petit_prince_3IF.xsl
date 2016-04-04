@@ -23,6 +23,7 @@
 
 <xsl:template match="//infos">
 	<xsl:apply-templates select="titre"/>
+	<xsl:apply-templates select="couverture"/>
 	<xsl:apply-templates select="auteur"/>
 	<blockquote style="color:darkgreen" >
 		<xsl:text>But du TP du </xsl:text>
@@ -56,13 +57,14 @@
 	</h2>
 </xsl:template>
 
-<xsl:template match="couverture">
+<xsl:template match="//couverture">
 	<div align="center">
 		<img>
 			<xsl:attribute name="src">
 				<xsl:value-of select="@chemin"/>
 			</xsl:attribute>
 		</img>
+		
 	</div>
 </xsl:template> 
 
