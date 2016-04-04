@@ -9,10 +9,11 @@
 			<couverture chemin="images/prince.png"/>
 			<but>Traitement d'un texte franco/hongrois avec XPath / XSLT / XQuery</but>
 			<mise_en_forme_par>
-				<auteur NoBinome="B3100">Moi</auteur>
-				<auteur NoBinome="B3100">Mon binome</auteur>
+				<auteur NoBinome="B3149">Alexandre BENTO</auteur>
+				<auteur NoBinome="B3149">Ruben PERICAS</auteur>
 			</mise_en_forme_par>
-			<date>01/05/201</date>
+			<email>alexandre.bento@insa-lyon.fr</email>
+			<date>04/04/2016</date>
 		</infos>
 		<lien langue="fr">http://wikilivres.info/wiki/Le_Petit_Prince</lien>
 		<lien langue="hu">http://mek.oszk.hu/00300/00384/00384.pdf</lien>
