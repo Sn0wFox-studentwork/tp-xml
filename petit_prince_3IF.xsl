@@ -10,19 +10,19 @@
 	<html>
 	<head>
 		<title>
-			<xsl:value-of select="titre"/>
-			<xsl:text> de </xsl:text>
-			<xsl:value-of select="auteur "/>
+			<xsl:value-of select="//titre"/>
+			<xsl:text>, de </xsl:text>
+			<xsl:value-of select="//auteur "/>
 		</title>
 	</head>
 	<body style="background-color:white;">
 		<xsl:apply-templates/>
-		</body>
+	</body>
 	</html>
 </xsl:template> 
 
 <xsl:template match="infos">
-	<xsl:apply-templates/>
+	<xsl:apply-templates select="titre"/>
 	<blockquote style="color:darkgreen" >
 		<xsl:text>But du TP du </xsl:text>
 		<xsl:value-of select="date"/>
@@ -38,8 +38,8 @@
 		<br/>
 		<xsl:text>Email du responsable : </xsl:text>
 		<xsl:value-of select="email"/>
-		
 	</blockquote>
+	<hr/>
 </xsl:template>
 
 <xsl:template match="titre">
@@ -51,7 +51,6 @@
 <xsl:template match="//infos/auteur">
 	<h2 style="text-align:center; font-style: italic;">
 		<br/><xsl:value-of select="auteur"/><br/>
-		<xsl:apply-templates/>
 	</h2>
 </xsl:template>
 
