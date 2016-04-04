@@ -86,6 +86,12 @@
 			</span>
 		</xsl:for-each>
 	</p>
+</xsl:template>
+
+<xsl:template match="//paragr[@type='dialogue'] ">
+	<table>
+		
+	</table>
 </xsl:template> 
 
 </xsl:stylesheet>
