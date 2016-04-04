@@ -21,6 +21,18 @@
 	</html>
 </xsl:template> 
 
+<xsl:template match="infos">
+	<xsl:apply-templates/>
+	<blockquote style="color:darkgreen" >
+		<xsl:text>But du TP du </xsl:text>
+		<xsl:value-of select="date"/>
+		<xsl:text> : </xsl:text>
+		<xsl:value-of select="but"/>
+		<br/>
+		
+	</blockquote>
+</xsl:template>
+
 <xsl:template match="titre">
 	<h1 style="text-align:center; color:blue;">
 		<xsl:apply-templates/>
