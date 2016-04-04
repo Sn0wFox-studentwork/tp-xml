@@ -55,4 +55,14 @@
 	</h2>
 </xsl:template>
 
+<xsl:template match="couverture">
+	<div align="center">
+		<img>
+			<xsl:attribute name="src">
+				<xsl:value-of select="@chemin"/>
+			</xsl:attribute>
+		</img>
+	</div>
+</xsl:template> 
+
 </xsl:stylesheet>
