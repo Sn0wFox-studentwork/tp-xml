@@ -113,11 +113,22 @@
           <xsl:for-each select="phrase[@langue='fr']">
             <tr>
               <td width="50">
-                <img src="images/{@locuteur}.png"/>
+                <img src="images/{@locuteur}.png" title="LePetitPrince"/>
               </td>
               <td>
-                <xsl:value-of select="phrase"/>
-                <xsl:apply-templates/>
+                <xsl:choose>
+                  <xsl:when test="contains(., 'mouton')">
+                    <span style="font-size: 24; font-weight: bold;">
+                      <xsl:value-of select="phrase"/>
+                      <xsl:apply-templates/>
+                      <img src="images/moutonDessin.png" title="mouton"/>
+                    </span>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:value-of select="phrase"/>
+                    <xsl:apply-templates/>
+                  </xsl:otherwise>
+                </xsl:choose>
               </td>
             </tr>
           </xsl:for-each>
