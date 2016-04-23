@@ -28,7 +28,9 @@
 		</table>
 		<br/>
 		<hr/>
+    <h3>Début du texte:</h3>
 		<xsl:apply-templates  select="//paragr"/>
+    <h3>Fin du texte</h3>
 	</body>
 	</html>
 </xsl:template>
@@ -81,10 +83,21 @@
 
 <!--PHRASE-FR-->
 <xsl:template match="//phrase[@langue='fr']">
-  <span>
-    <xsl:value-of select="phrase"/>
-    <xsl:apply-templates/>
-  </span>
+  <xsl:choose>
+    <xsl:when test="contains(., 'mouton')">
+      <span style="font-size: 24; font-weight: bold;">
+        <xsl:value-of select="phrase"/>
+        <xsl:apply-templates/>
+        <img src="images/moutonDessin.png" title="mouton"/>
+      </span>
+    </xsl:when>
+    <xsl:otherwise>
+      <span>
+        <xsl:value-of select="phrase"/>
+        <xsl:apply-templates/>
+      </span>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <!--PHRASE-HU-->
@@ -98,7 +111,9 @@
 <!--PARAGRAPH-NARRATION-->
 <xsl:template match="//paragr[@type='narration'] ">
 	<p>
-    <xsl:apply-templates/>
+    <xsl:apply-templates select="phrase[@langue='fr']"/>
+    <br/>
+    <xsl:apply-templates select="phrase[@langue='hu']"/>
 	</p>
 </xsl:template> 
 
