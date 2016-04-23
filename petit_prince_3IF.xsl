@@ -28,7 +28,6 @@
 		</table>
 		<br/>
 		<hr/>
-		
 		<xsl:apply-templates  select="//paragr"/>
 	</body>
 	</html>
@@ -105,7 +104,6 @@
 
 <!--PARAGRAPH-DIALOG-->
 <xsl:template match="//paragr[@type='dialogue'] ">
-	lel
 	<table align="center" width="90%">
 		<tr>
       <td width="45%">
@@ -154,6 +152,11 @@
       </td>
 		</tr>
 	</table>
+  <xsl:if test="contains(phrase, 'caisse')">
+    <div style="text-align: center;">
+      <img src="./images/mouton.png" title="mouton"/>
+    </div>
+  </xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>
