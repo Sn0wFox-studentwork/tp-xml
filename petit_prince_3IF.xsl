@@ -29,7 +29,7 @@
 		<br/>
 		<hr/>
 		
-		<xsl:apply-templates  select="//paragr[@type='narration'] "/>
+		<xsl:apply-templates  select="//paragr"/>
 	</body>
 	</html>
 </xsl:template> 
@@ -89,7 +89,7 @@
 		<xsl:for-each select="phrase[@langue='hu']">
 			<span style="color:brown; font-style:italic" >
 				<xsl:value-of select="phrase"/>
-				<xsl:apply-templates/>
+        <xsl:apply-templates/>
 			</span>
 		</xsl:for-each>
 	</p>
@@ -97,22 +97,48 @@
 
 <xsl:template match="//paragr[@type='dialogue'] ">
 	lel
-	<table>
+	<table align="center" width="90%">
 		<tr>
-			<td style="width=45%">
-				<table>
-					<xsl:for-each select="phrase[@langue='fr']">
-						<tr>
-							<td>
-								<xsl:value-of select="phrase"/>
-								<xsl:apply-templates/>
-							</td>
-						</tr>
-					</xsl:for-each>
-				</table>
-			</td>
+      <td width="45%">
+        <table border="1" cellpading="100" width="100%">
+          <xsl:for-each select="phrase[@langue='fr']">
+            <tr>
+              <td>
+              <xsl:value-of select="phrase"/>
+              <xsl:apply-templates/>
+              </td>
+            </tr>
+          </xsl:for-each>
+        </table>
+      </td>
+      <td></td>
+      <td width="45%">
+        <table border="1" cellpading="100" width="100%">
+          <xsl:for-each select="phrase[@langue='hu']">
+            <tr>
+              <td>
+                <xsl:value-of select="phrase"/>
+                <xsl:apply-templates/>
+              </td>
+            </tr>
+          </xsl:for-each>
+        </table>
+      </td>
 		</tr>
 	</table>
-</xsl:template> 
+</xsl:template>
+
+    <!--<td style="width=45%">-->
+        <!--<table>-->
+            <!--<xsl:for-each select="phrase[@langue='fr']">-->
+                <!--<tr>-->
+                    <!--<td>-->
+                        <!--<xsl:value-of select="phrase"/>-->
+                        <!--<xsl:apply-templates/>-->
+                    <!--</td>-->
+                <!--</tr>-->
+            <!--</xsl:for-each>-->
+        <!--</table>-->
+    <!--</td>-->
 
 </xsl:stylesheet>
