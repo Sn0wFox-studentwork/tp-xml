@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="iso-8859-1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Partie DOM + AJAX</title>
+
+  <!-- Bootstrap -->
+  <link href="fichiersPourAjax/css/bootstrap.min.css" rel="stylesheet">
+  <style type="text/css">
+    .media-list li {
+      padding: 5px
+    }
+
+    #buttons {
+      text-align: center;
+    }
+  </style>
+
+  <script type="text/javascript">
+    // TODO : add our script !
+  </script>
+</head>
+
+<body id="body">
+  <div class="container">
+
+    <h1>Super page de rendu !</h1>
+
+    <h2>Les boutons qui vont d&eacute;clencher l'AJAX</h2>
+
+    <p id="buttons">
+      <input id="myButton1" type="button" value="1. FILL"
+             onClick=""/>
+      <br/>
+      <input id="myButton2" type="button" value="2. FILL"
+             onClick=""/>
+      <br/>
+      <input id="myButton3" type="button" value="3. FILL"
+             onClick=""/>
+      <br/>
+      <input id="myButton4" type="button" value="4. FILL"
+             onClick=""/>
+      <br/>
+      <input id="myButton5" type="button" value="5. FILL"
+             onClick=""/>
+      <br/>
+      <input id="myButton6" type="button" value="6. FILL (BONUS)"
+             onClick=""/>
+      <br/>
+      <input id="myButton7" type="button" value="7. FILL (BONUS)"
+             onClick=""/>
+      <br/>
+    </p>
+
+    <div>
+      <h2 id="travail">Travail &agrave; r&eacute;aliser</h2>
+      <p>Cr&eacute;ez une page (appel&eacute;e <code>PartieAjaxDOM.html</code> en vous inspirant de cette page) contenant
+        les boutons pour effectuer les actions suivantes :</p>
+      <ol>
+        <li>Bouton 1 : modifie la couleur de l'arrière plan de la page en bleu et la couleur du texte du bouton en
+          blanc.
+        </li>
+        <li>Bouton 2 :
+          <ul>
+            <li>affiche les informations <code>&lt;title&gt;</code>, <code>&lt;dtstart&gt;/&lt;dtend&gt;</code>, <code>
+              &lt;summary&gt;</code>, <code>&lt;url&gt;</code>, <code>&lt;description&gt;</code> des évènements (un seul)
+              dont le titre contient le mot &quot;Workaholics&quot; dans le fichier <a
+                  href="fichiersPourAjax/calendar-short.xml">calendar-short.xml</a> en utilisant une feuille de style
+              (<code>calendar-eventlist-workaholics.xsl</code>, &agrave; &eacute;crire). La date sera formatée au moyen de
+              <code>substring</code> pour obtenir une chaine de la forme : "le DD-MM-YYYY de HHhMM à HHhMM".
+            </li>
+            <li>affiche le Bouton 3.</li>
+          </ul>
+          Utiliser le framework <a href="http://getbootstrap.com/">Twitter Bootstrap</a> déjà inclus dans cette page et
+          plus particulièrement le composant <a href="http://getbootstrap.com/components/#media-list">media-list</a> (cf.
+          exemple 4). Le résultat obtenu sera complété à la question suivante.
+        </li>
+        <li>Bouton 3 (invisible au début) : modifie en utilisant javascript et des fonctions DOM les informations de
+          l'évènement affich&eacute;e avec le bouton 2 afin d'obtenir un résultat identique à l'exemple 4. Il faudra
+          notamment :
+          <ul>
+            <li>affiche l'image du programme.</li>
+            <li>ajoute des informations telles que l'année (Year), l'age requis (Rated), la date de première diffusion
+              (Released), la durée (Runtime), le genre (Genre), la langue (Language), le pays (Country), le score et le
+              nombre de votes sur IMDB (imdbRating et imdbVotes).
+            </li>
+          </ul>
+          Pour obtenir ces informations supplémentaires, vous intérogerez le service <a
+              href="http://www.omdbapi.com">OMDB</a> accessible à l'adresse <a href="http://www.omdbapi.com">http://www.omdbapi.com</a>
+          en utilisant la fonction <code>getHttpJSON</code> qui vous est fournie.
+        </li>
+        <li>Bouton 4 : affiche le calendrier complet (informations de tous les évènements) en utilisant une feuille de
+          style (<code>calendar-eventlist.xsl</code>, &agrave; &eacute;crire). Trier la liste des évènements par ordre
+          alphabétique sur le <code>&lt;title&gt;</code>. Editer la feuille de style CSS de la page HTML afin que le fond
+          des évènement soit légèrement grisé et arrondi au survol de la souris.
+        </li>
+        <li>Bouton 5 : idem bouton 3 mais pour l'ensemble des évènements du calendrier affichés sur la page.</li>
+        <li>(bonus) Bouton 6 : Proposer une idée originale complétant ce que vous avez déjà réalisé (autres informations
+          obtenues à partir d'<a href="http://www.omdbapi.com">OMDB</a> ou d'autres sources).
+        </li>
+        <li>(bonus) En vous inspirant du fichier : <code>petit_prince_3IF.xsl</code> cr&eacute;er une feuille de style xsl
+          contenant du javascript qui permet d'afficher l'extrait du texte de Petit Prince au choix : en Fran&ccedil;ais,
+          en Hogrois ou dans les deux langues.
+        </li>
+      </ol>
+    </div>
+
+    <div style="height:150pt;"/>
+
+  </div>
+
+</body>
+</html>
+
