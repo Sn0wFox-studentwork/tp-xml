@@ -77,10 +77,10 @@
 				<xsl:value-of select="@chemin"/>
 			</xsl:attribute>
 		</img>
-		
 	</div>
 </xsl:template>
 
+<!--PHRASE-FR-->
 <xsl:template match="//phrase[@langue='fr']">
   <span>
     <xsl:value-of select="phrase"/>
@@ -88,6 +88,7 @@
   </span>
 </xsl:template>
 
+<!--PHRASE-HU-->
 <xsl:template match="//phrase[@langue='hu']">
   <span style="color:brown; font-style:italic" >
     <xsl:value-of select="phrase"/>
@@ -108,12 +109,15 @@
 	<table align="center" width="90%">
 		<tr>
       <td width="45%">
-        <table border="1" cellpading="100" width="100%">
+        <table border="1" cellpading="10" width="100%">
           <xsl:for-each select="phrase[@langue='fr']">
             <tr>
+              <td width="50">
+                <img src="images/{@locuteur}.png"/>
+              </td>
               <td>
-              <xsl:value-of select="phrase"/>
-              <xsl:apply-templates/>
+                <xsl:value-of select="phrase"/>
+                <xsl:apply-templates/>
               </td>
             </tr>
           </xsl:for-each>
@@ -121,12 +125,17 @@
       </td>
       <td></td>
       <td width="45%">
-        <table border="1" cellpading="100" width="100%">
+        <table border="1" cellpading="10" width="100%">
           <xsl:for-each select="phrase[@langue='hu']">
             <tr>
+              <td width="50">
+                <img src="images/{@locuteur}.png"/>
+              </td>
               <td>
-                <xsl:value-of select="phrase"/>
-                <xsl:apply-templates/>
+                <span style="color:brown; font-style:italic" >
+                  <xsl:value-of select="phrase"/>
+                  <xsl:apply-templates/>
+                </span>
               </td>
             </tr>
           </xsl:for-each>
