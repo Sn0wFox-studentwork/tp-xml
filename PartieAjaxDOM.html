@@ -20,12 +20,17 @@
 
   <script type="text/javascript">
     // TODO : add our script !
-    function changeColor() {
+    function changeColor(emitter) {
       let toModify = window.document.getElementById("body");
       if(toModify.getAttribute("style")) {
         toModify.setAttribute("style", "");
       } else {
         toModify.setAttribute("style", "background-color: blue;")
+      }
+      if(emitter.getAttribute("style")) {
+        emitter.setAttribute("style", "");
+      } else {
+        emitter.setAttribute("style", "color: white;")
       }
     }
   </script>
@@ -39,8 +44,8 @@
     <h2>Les boutons qui vont d&eacute;clencher l'AJAX</h2>
 
     <p id="buttons">
-      <input id="myButton1" type="button" value="1. FILL"
-             onClick="changeColor()"/>
+      <input id="myButton1" type="button" value="1. Change background color to blue and the color of this text in white"
+             onClick="changeColor(this)"/>
       <br/>
       <input id="myButton2" type="button" value="2. FILL"
              onClick=""/>
