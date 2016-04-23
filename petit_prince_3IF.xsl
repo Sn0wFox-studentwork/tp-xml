@@ -16,17 +16,25 @@
 		</title>
 	</head>
 	<body style="background-color:white;">
-		<xsl:apply-templates select="//infos"/>
-		<h3>Début du texte :</h3>
-		<xsl:apply-templates select="//corps"/>
+		<table border="0" width="1200" align="center">
+			<tr>
+				<td><xsl:apply-templates select="//infos/couverture"/></td>
+				<td>
+					<xsl:apply-templates select="//infos/titre"/>
+					<xsl:apply-templates select="//infos/auteur"/>
+					<xsl:apply-templates select="//infos"/>
+				</td>
+			</tr>
+		</table>
+		<br/>
+		<hr/>
+		
+		<xsl:apply-templates  select="//paragr[@type='narration'] "/>
 	</body>
 	</html>
 </xsl:template> 
 
 <xsl:template match="//infos">
-	<xsl:apply-templates select="titre"/>
-	<xsl:apply-templates select="couverture"/>
-	<xsl:apply-templates select="auteur"/>
 	<blockquote style="color:darkgreen" >
 		<xsl:text>But du TP du </xsl:text>
 		<xsl:value-of select="date"/>
@@ -43,7 +51,6 @@
 		<xsl:text>Email du responsable : </xsl:text>
 		<xsl:value-of select="email"/>
 	</blockquote>
-	<hr/>
 </xsl:template>
 
 <xsl:template match="//titre">
@@ -86,11 +93,25 @@
 			</span>
 		</xsl:for-each>
 	</p>
-</xsl:template>
+</xsl:template> 
 
 <xsl:template match="//paragr[@type='dialogue'] ">
+	lel
 	<table>
-		
+		<tr>
+			<td style="width=45%">
+				<table>
+					<xsl:for-each select="phrase[@langue='fr']">
+						<tr>
+							<td>
+								<xsl:value-of select="phrase"/>
+								<xsl:apply-templates/>
+							</td>
+						</tr>
+					</xsl:for-each>
+				</table>
+			</td>
+		</tr>
 	</table>
 </xsl:template> 
 
