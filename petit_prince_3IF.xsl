@@ -3,9 +3,9 @@
 <!-- New document created with EditiX at Mon Apr 04 15:33:33 CEST 2016 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-
 <xsl:output method="html"/>
-	
+
+<!--GLOBAL-->
 <xsl:template match="/">
 	<html>
 	<head>
@@ -32,8 +32,9 @@
 		<xsl:apply-templates  select="//paragr"/>
 	</body>
 	</html>
-</xsl:template> 
+</xsl:template>
 
+<!--HEADER-->
 <xsl:template match="//infos">
 	<blockquote style="color:darkgreen" >
 		<xsl:text>But du TP du </xsl:text>
@@ -53,12 +54,14 @@
 	</blockquote>
 </xsl:template>
 
+<!--TITLE-->
 <xsl:template match="//titre">
 	<h1 style="text-align:center; color:blue;">
 		<xsl:apply-templates/>
 	</h1>
 </xsl:template>
 
+<!--AUTHOR-->
 <xsl:template match="//auteur">
 	<h2 style="text-align:center; font-style: italic;">
 		<xsl:value-of select="auteur"/>
@@ -66,6 +69,7 @@
 	</h2>
 </xsl:template>
 
+<!--HEADER PICTURE-->
 <xsl:template match="//couverture">
 	<div align="center">
 		<img>
@@ -75,26 +79,30 @@
 		</img>
 		
 	</div>
-</xsl:template> 
+</xsl:template>
 
+<xsl:template match="//phrase[@langue='fr']">
+  <span>
+    <xsl:value-of select="phrase"/>
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+
+<xsl:template match="//phrase[@langue='hu']">
+  <span style="color:brown; font-style:italic" >
+    <xsl:value-of select="phrase"/>
+    <xsl:apply-templates/>
+  </span>
+</xsl:template>
+
+<!--PARAGRAPH-NARRATION-->
 <xsl:template match="//paragr[@type='narration'] ">
 	<p>
-		<xsl:for-each select="phrase[@langue='fr']">
-			<span>
-				<xsl:value-of select="phrase"/>
-				<xsl:apply-templates/>
-			</span>
-		</xsl:for-each>
-		<br/>
-		<xsl:for-each select="phrase[@langue='hu']">
-			<span style="color:brown; font-style:italic" >
-				<xsl:value-of select="phrase"/>
-        <xsl:apply-templates/>
-			</span>
-		</xsl:for-each>
+    <xsl:apply-templates/>
 	</p>
 </xsl:template> 
 
+<!--PARAGRAPH-DIALOG-->
 <xsl:template match="//paragr[@type='dialogue'] ">
 	lel
 	<table align="center" width="90%">
@@ -127,18 +135,5 @@
 		</tr>
 	</table>
 </xsl:template>
-
-    <!--<td style="width=45%">-->
-        <!--<table>-->
-            <!--<xsl:for-each select="phrase[@langue='fr']">-->
-                <!--<tr>-->
-                    <!--<td>-->
-                        <!--<xsl:value-of select="phrase"/>-->
-                        <!--<xsl:apply-templates/>-->
-                    <!--</td>-->
-                <!--</tr>-->
-            <!--</xsl:for-each>-->
-        <!--</table>-->
-    <!--</td>-->
 
 </xsl:stylesheet>
