@@ -20,6 +20,14 @@
 
   <script type="text/javascript">
     // TODO : add our script !
+    function changeColor() {
+      let toModify = window.document.getElementById("body");
+      if(toModify.getAttribute("style")) {
+        toModify.setAttribute("style", "");
+      } else {
+        toModify.setAttribute("style", "background-color: blue;")
+      }
+    }
   </script>
 </head>
 
@@ -32,7 +40,7 @@
 
     <p id="buttons">
       <input id="myButton1" type="button" value="1. FILL"
-             onClick=""/>
+             onClick="changeColor()"/>
       <br/>
       <input id="myButton2" type="button" value="2. FILL"
              onClick=""/>
