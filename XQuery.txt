@@ -1,0 +1,98 @@
+1.
+
+<phrases>
+for $p in //phrase
+order by $p
+where $p/@langue = "fr"
+return $p
+</phrases>
+
+2.
+
+<phrases>
+for $p in //phrase
+where contains($p, "mouton") and $p/@langue = "fr"
+return $p
+</phrases>
+
+3.
+
+for $p in //paragr
+return $p/@type
+
+for $p in //paragr
+let $n := count($p/phrase)
+return <paragr type = "{$p/@type}" nb_phrases = "{$n}"></paragr>
+
+for $p in //paragr
+let $n := count($p/phrase)
+let $m := distinct-values($p/phrase/@modalite)
+return <paragr type = "{$p/@type}" nb_phrases = "{$n}" modalites = "{data($m)}"></paragr>
+
+for $p in //paragr
+let $n := count($p/phrase)
+let $m := distinct-values($p/phrase/@modalite)
+let $l := distinct-values($p/phrase/@locuteur)
+return <paragr type = "{$p/@type}" nb_phrases = "{$n}" modalites = "{$m}" locuteurs = "{$l}"></paragr>
+
+4.
+
+declare function local:phfr($p as element(paragr))
+as element(phrase)*
+{
+  for $ph in $p/phrase
+where $ph/@langue = "fr"
+return $ph
+};
+
+for $p in //paragr
+return <paragr type = "{$p/@type}"> "{local:phfr($p)}" </paragr>
+
+5.
+
+declare function local:phfr($p as element(paragr))
+as element(phrase)*
+{
+  for $ph in $p/phrase
+where $ph/@langue = "fr"
+return $ph
+};
+
+for $p in //paragr
+return <paragr type = "{$p/@type}"> "{local:phfr($p)[2]}" </paragr>
+
+6.
+
+declare function local:phfr($p as element(paragr))
+as element(phrase)*
+{
+  for $ph in $p/phrase
+where $ph/@langue = "fr"
+return $ph
+};
+
+for $p in //paragr
+where $p/@type = "dialogue"
+let $ph := local:phfr($p)[@locuteur = "Narrateur"]
+return $ph
+
+7.
+
+declare function local:phfrPP($p as element(paragr))
+as element(phrase)*
+{
+  for $ph in $p/phrase
+where $ph/@langue = "fr" and $ph/@locuteur = "LePetitPrince" and contains($ph, "mouton")
+return $ph
+};
+
+declare function local:ph($root)
+as element(phrase)*
+{
+  for $p in $root
+  let $ph := local:phfrPP($p)
+ return $ph
+};
+
+let $ph := local:ph(//paragr)
+return <phrases nb_phrases = "{count($ph)}"> "{$ph}" </phrases>
