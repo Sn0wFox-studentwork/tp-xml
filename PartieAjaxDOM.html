@@ -62,9 +62,8 @@
     }
 
     function infoAndButton3(xmlDocumentUrl, xslDocumentUrl) {
-      // Hide or disply button 3
+      // Hide or display button 3
       let button = window.document.getElementById("myButton3");
-      console.log(button.getAttribute("style"));
       if(button.getAttribute("style").substr(0, 18) === "visibility: hidden") {
         button.setAttribute("style", "visibility: visible;");
       } else {
@@ -76,14 +75,15 @@
       let xsl = getHttpXML(xslDocumentUrl);
       let xsltProc = new XSLTProcessor();
       xsltProc.importStylesheet(xsl);
-
       let formatedDoc = xsltProc.transformToDocument(doc);
-      let toReplace = window.document.getElementById("replace");
-      toReplace.replace(formatedDoc.getElementsByTagName("doc")[0]);
 
-
-
-      doc.getElementsByTagName("title");
+      let parent = window.document.getElementById("replace");
+      let child = getFirstChild(parent);
+      let forReplace = formatedDoc.getElementsByTagName("ul")[0];
+      console.log(parent);
+      console.log(forReplace);
+      console.log(getFirstChild(parent));
+      parent.replaceChild(forReplace, child);
     }
   </script>
 </head>
@@ -119,7 +119,11 @@
       <br/>
     </p>
 
-    <div id="repalce">This will be replaced by some infos.</div>
+    <div id="replace">
+      <span>
+        This will be replaced by some infos.
+      </span>
+    </div>
 
     <div>
       <h2 id="travail">Travail &agrave; r&eacute;aliser</h2>

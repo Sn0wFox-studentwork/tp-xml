@@ -4,6 +4,10 @@
 
 <xsl:template match="//title">
   <xsl:if test=". = 'Workaholics'">
+    <ul class="media-list">
 
+    </ul>
   </xsl:if>
 </xsl:template>
+
+</xsl:stylesheet>
