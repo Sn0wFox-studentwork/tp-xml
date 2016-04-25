@@ -7,43 +7,22 @@
 
   <!--GLOBAL-->
   <xsl:template match="/">
-    <div style="text-align: center;">
-      <script type="text/javascript">
-        function printPrince(lang) {
-          console.log("hello!");
-        }
-        window.document.getElementById("princeButtonHu").setAttribute("onClick", "printPrince('hu')");
-        window.document.getElementById("princeButtonFr").setAttribute("onClick", "printPrince('fr')");
-      </script>
-      <input id="princeButtonHu" type="button" value="A kis herceg a magyar"/>
-      <span style="width: 5%"> </span>
-      <input id="princeButtonHu" type="button" value="A kis herceg a magyar"/>
+    <div id="prince" hidden="">
       <xsl:apply-templates  select="//paragr"/>
     </div>
   </xsl:template>
 
   <!--PHRASE-FR-->
   <xsl:template match="//phrase[@langue='fr']">
-    <xsl:choose>
-      <xsl:when test="contains(., 'mouton')">
-        <span style="font-size: 24; font-weight: bold;">
-          <xsl:value-of select="phrase"/>
-          <xsl:apply-templates/>
-          <img src="images/moutonDessin.png" title="mouton"/>
-        </span>
-      </xsl:when>
-      <xsl:otherwise>
-        <span>
-          <xsl:value-of select="phrase"/>
-          <xsl:apply-templates/>
-        </span>
-      </xsl:otherwise>
-    </xsl:choose>
+    <span class="fr" hidden="">
+      <xsl:value-of select="phrase"/>
+      <xsl:apply-templates/>
+    </span>
   </xsl:template>
 
   <!--PHRASE-HU-->
   <xsl:template match="//phrase[@langue='hu']">
-    <span style="color:brown; font-style:italic" >
+    <span class="hu" style="color:brown; font-style:italic" hidden="">
       <xsl:value-of select="phrase"/>
       <xsl:apply-templates/>
     </span>
@@ -65,7 +44,7 @@
         <td width="45%">
           <table border="1" cellpading="10" width="100%">
             <xsl:for-each select="phrase[@langue='fr']">
-              <tr>
+              <tr class="fr" hidden="">
                 <td width="50px">
                   <img src="images/{@locuteur}.png" title="LePetitPrince"/>
                 </td>
@@ -92,7 +71,7 @@
         <td width="45%">
           <table border="1" cellpading="10" width="100%">
             <xsl:for-each select="phrase[@langue='hu']">
-              <tr>
+              <tr class="hu" hidden="">
                 <td width="50">
                   <img src="images/{@locuteur}.png"/>
                 </td>

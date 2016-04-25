@@ -33,6 +33,14 @@
       return x;
     }
 
+    function getLastChild(n) {
+      let x = n.lastChild;
+      while( x.nodeType != 1) {
+        x = x.previousSibling;
+      }
+      return x;
+    }
+
     function getHttpXML(xmlDocumentUrl) {
 
       var httpAjax;
@@ -153,55 +161,7 @@
         itemBodyTitle.setAttribute("class", "media-heading title");
         itemBodyTitle.innerHTML = response.Title;
         itemBody.appendChild(itemBodyTitle);
-        /*
-        // Création de l'élément <div> correspondant à la date
-        var itemBodyDate = document.createElement("div");
-        itemBodyDate.innerHTML = "le " + response.Released;
-        itemBody.appendChild(itemBodyDate);
-        
-        // Création de l'élément <div> correspondant à l'âge requis
-        var itemRated = document.createElement("div");
-        itemRated.innerHTML = "Âge requis : " + response.Rated;
-        itemBody.appendChild(itemRated);
-        
-        // Création de l'élément <div> correspondant à la durée
-        var itemRuntime = document.createElement("div");
-        itemRuntime.innerHTML = "Durée : " + response.Runtime;
-        itemBody.appendChild(itemRuntime);
-        
-        // Création de l'élément <div> correspondant au genre
-        var itemGenre = document.createElement("div");
-        itemGenre.innerHTML = "Genre : " + response.Genre;
-        itemBody.appendChild(itemGenre);
-        
-        // Création de l'élément <div> correspondant à la langue
-        var itemLanguage = document.createElement("div");
-        itemLanguage.innerHTML = "Âge requis : " + response.Language;
-        itemBody.appendChild(itemLanguage);
-        
-        // Création de l'élément <div> correspondant au pays
-        var itemCountry = document.createElement("div");
-        itemCountry.innerHTML = "Âge requis : " + response.Country;
-        itemBody.appendChild(itemCountry);
-        
-        // Création de l'élément <div> correspondant au titre de l'épisode
-        var itemBodyTitle = document.createElement("div");
-        itemBody.appendChild(itemBodyTitle);
-        var itemBodyTitleLink = document.createElement("a");
-        itemBodyTitleLink.setAttribute("href", response.URLEpisode12);
-        itemBodyTitleLink.innerHTML = response.TitleEpisode12;
-        itemBodyTitle.appendChild(itemBodyTitleLink);
-        
-        // Création de l'élément <div> correspondant à l'url
-        var itemBodyUrl = document.createElement("div");
-        itemBodyUrl.innerHTML = response.URLEpisode12;
-        itemBody.appendChild(itemBodyUrl);
-        
-        // Création de l'élément <div> correspondant à la description
-        var itemBodyDescription = document.createElement("div");
-        itemBodyDescription.innerHTML = response.SummaryEpisode12;
-        itemBody.appendChild(itemBodyDescription);
-	*/
+
         // Création de l'élément <div> correspondant aux caractéritiques du programme
         var moreInfos = document.createElement("div");
         itemBody.appendChild(moreInfos);
@@ -267,20 +227,57 @@
       parent.replaceChild(forReplace, child);
     }
 
+    let displayHu = false;
+    let displayFr = false;
+
     function bonusPrince(xmlDocumentUrl, xslDocumentUrl) {
+      let textalign = "text-align: center;";
+      let button = window.document.getElementById("princeButtons");
+      if(button.getAttribute("style").substr(0, 18) === "visibility: hidden") {
+        button.setAttribute("style", "visibility: visible; " + textalign);
+      } else {
+        button.setAttribute("style", "visibility: hidden; " + textalign);
+      }
       let doc = getHttpXML(xmlDocumentUrl);
       let xsl = getHttpXML(xslDocumentUrl);
       let xsltProc = new XSLTProcessor();
       xsltProc.importStylesheet(xsl);
       let formatedDoc = xsltProc.transformToDocument(doc);
 
-      let parent = window.document.getElementById("prince");
-      let child = getFirstChild(parent);
+      // NB : replace child a second time will just hide it,
+      //      and that's what we want.
+      //      It's maybe not the brighest way, but it's quick to write.
+      let parent = window.document.getElementById("princeBlock");
+      let child = getLastChild(parent);
       let forReplace = formatedDoc.getElementsByTagName("div")[0];
       console.log(parent);
       console.log(forReplace);
       console.log(getFirstChild(parent));
       parent.replaceChild(forReplace, child);
+    }
+
+    function displayStory(lang) {
+      let story = window.document.getElementsByClassName(lang);
+      for(let i =0; i< story.length; i++) {
+        if(story[i].hasAttribute("hidden")) {
+          story[i].removeAttribute("hidden");
+        } else {
+          story[i].setAttribute("hidden", "");
+        }
+      }
+      if(lang==="hu") {
+        displayHu = !displayHu;
+      } else {
+        displayFr = !displayFr;
+      }
+      let storyBloc = window.document.getElementById("prince");
+      if(displayFr || displayHu) {
+        storyBloc.removeAttribute("hidden");
+        window.document.getElementById("myButton7").setAttribute("value", "7. Hide Le Petit Prince (BONUS)");
+      } else {
+        storyBloc.setAttribute("hidden", "");
+        window.document.getElementById("myButton7").setAttribute("value", "7. Display Le Petit Prince (BONUS)");
+      }
     }
 
   </script>
@@ -312,21 +309,21 @@
       <input id="myButton6" type="button" value="6. FILL (BONUS)"
              onClick=""/>
       <br/>
-      <input id="myButton7" type="button" value="7. FILL (BONUS)"
+      <input id="myButton7" type="button" value="7. Display Le Petit Prince (BONUS)"
              onClick="bonusPrince('petit_prince_3IF.xml', 'petit_prince.xsl')"/>
       <br/>
     </p>
 
-    <div id="prince">
-      <div id="princeButtons" style="text-align: center; visibility: hidden;">
+    <div id="princeBlock">
+      <div id="princeButtons" style="visibility: hidden; text-align: center;">
         <input id="princeButtonFr" type="button" value="Le Petit Prince en français"
-               onClick="printPrince('petit_prince_3IF.xml', 'petit_prince_bonus.xsl', 'fr')"/>
+               onClick="displayStory('fr')"/>
         <span style="width: 5%"></span>
         <input id="princeButtonHu" type="button" value="A kis herceg a magyar"
-               onClick="printPrince('petit_prince_3IF.xml', 'petit_prince_bonus.xsl', 'hu')"/>
+               onClick="displayStory('hu')"/>
       </div>
       <div>
-        This will be repaced by Le Petit Prince.
+        This will be replaced by Le Petit Prince.
       </div>
     </div>
 
