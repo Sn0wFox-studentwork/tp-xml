@@ -37,4 +37,62 @@ return <paragr type = "{$p/@type}" nb_phrases = "{$n}" modalites = "{$m}" locute
 
 4.
 
+declare function local:phfr($p as element(paragr))
+as element(phrase)*
+{
+  for $ph in $p/phrase
+where $ph/@langue = "fr"
+return $ph
+};
 
+for $p in //paragr
+return <paragr type = "{$p/@type}"> "{local:phfr($p)}" </paragr>
+
+5.
+
+declare function local:phfr($p as element(paragr))
+as element(phrase)*
+{
+  for $ph in $p/phrase
+where $ph/@langue = "fr"
+return $ph
+};
+
+for $p in //paragr
+return <paragr type = "{$p/@type}"> "{local:phfr($p)[2]}" </paragr>
+
+6.
+
+declare function local:phfr($p as element(paragr))
+as element(phrase)*
+{
+  for $ph in $p/phrase
+where $ph/@langue = "fr"
+return $ph
+};
+
+for $p in //paragr
+where $p/@type = "dialogue"
+let $ph := local:phfr($p)[@locuteur = "Narrateur"]
+return $ph
+
+7.
+
+declare function local:phfrPP($p as element(paragr))
+as element(phrase)*
+{
+  for $ph in $p/phrase
+where $ph/@langue = "fr" and $ph/@locuteur = "LePetitPrince" and contains($ph, "mouton")
+return $ph
+};
+
+declare function local:ph($root)
+as element(phrase)*
+{
+  for $p in $root
+  let $ph := local:phfrPP($p)
+ return $ph
+};
+
+let $ph := local:ph(//paragr)
+return <phrases nb_phrases = "{count($ph)}"> "{$ph}" </phrases>
