@@ -125,13 +125,13 @@
         <table border="1" cellpading="10" width="100%">
           <xsl:for-each select="phrase[@langue='fr']">
             <tr>
-              <td width="50">
+              <td width="50px">
                 <img src="images/{@locuteur}.png" title="LePetitPrince"/>
               </td>
               <td>
                 <xsl:choose>
                   <xsl:when test="contains(., 'mouton')">
-                    <span style="font-size: 24; font-weight: bold;">
+                    <span style="font-size: 24px; font-weight: bold;">
                       <xsl:value-of select="phrase"/>
                       <xsl:apply-templates/>
                       <img src="images/moutonDessin.png" title="mouton"/>
