@@ -1,0 +1,40 @@
+1.
+
+<phrases>
+for $p in //phrase
+order by $p
+where $p/@langue = "fr"
+return $p
+</phrases>
+
+2.
+
+<phrases>
+for $p in //phrase
+where contains($p, "mouton") and $p/@langue = "fr"
+return $p
+</phrases>
+
+3.
+
+for $p in //paragr
+return $p/@type
+
+for $p in //paragr
+let $n := count($p/phrase)
+return <paragr type = "{$p/@type}" nb_phrases = "{$n}"></paragr>
+
+for $p in //paragr
+let $n := count($p/phrase)
+let $m := distinct-values($p/phrase/@modalite)
+return <paragr type = "{$p/@type}" nb_phrases = "{$n}" modalites = "{data($m)}"></paragr>
+
+for $p in //paragr
+let $n := count($p/phrase)
+let $m := distinct-values($p/phrase/@modalite)
+let $l := distinct-values($p/phrase/@locuteur)
+return <paragr type = "{$p/@type}" nb_phrases = "{$n}" modalites = "{$m}" locuteurs = "{$l}"></paragr>
+
+4.
+
+
