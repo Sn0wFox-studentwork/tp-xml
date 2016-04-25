@@ -13,6 +13,11 @@
       padding: 5px
     }
 
+    .event:hover {
+      background-color: darkgrey;
+      border-radius: 7px;
+    }
+
     #buttons {
       text-align: center;
     }
@@ -85,6 +90,22 @@
       console.log(getFirstChild(parent));
       parent.replaceChild(forReplace, child);
     }
+
+    function completeCalendar(xmlDocumentUrl, xslDocumentUrl) {
+      let doc = getHttpXML(xmlDocumentUrl);
+      let xsl = getHttpXML(xslDocumentUrl);
+      let xsltProc = new XSLTProcessor();
+      xsltProc.importStylesheet(xsl);
+      let formatedDoc = xsltProc.transformToDocument(doc);
+
+      let parent = window.document.getElementById("events");
+      let child = getFirstChild(parent);
+      let forReplace = formatedDoc.getElementsByTagName("ul")[0];
+      console.log(parent);
+      console.log(forReplace);
+      console.log(getFirstChild(parent));
+      parent.replaceChild(forReplace, child);
+    }
   </script>
 </head>
 
@@ -106,7 +127,7 @@
              onClick=""/>
       <br/>
       <input id="myButton4" type="button" value="4. FILL"
-             onClick=""/>
+             onClick="completeCalendar('fichiersPourAjax/calendar-full.xml', 'calendar-eventlist.xsl')"/>
       <br/>
       <input id="myButton5" type="button" value="5. FILL"
              onClick=""/>
@@ -122,6 +143,12 @@
     <div id="replace">
       <span>
         This will be replaced by some infos.
+      </span>
+    </div>
+
+    <div id="events">
+      <span>
+        This will be repaced by the list of all events.
       </span>
     </div>
 
