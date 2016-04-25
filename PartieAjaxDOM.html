@@ -68,7 +68,7 @@
         httpAjax.open('GET', jsonDocumentUrl, false);
         httpAjax.send();
         
-        console.log(httpAjax.responseText);
+        //console.log(httpAjax.responseText);
 
         var responseData = eval("(" + httpAjax.responseText + ")");
         
@@ -114,30 +114,37 @@
       parent.replaceChild(forReplace, child);
     }
     
-    function displayInfo (xmlDocumentUrl, xslDocumentUrl)
+    function displayInfo (xmlDocumentUrl, xslDocumentUrl, zone)
     {
 	  let document = getHttpXML(xmlDocumentUrl);
       let xsl = getHttpXML(xslDocumentUrl);
       let xsltProc = new XSLTProcessor();
       xsltProc.importStylesheet(xsl);
       let formatedDoc = xsltProc.transformToDocument(document);
-
+      
       let parent = window.document.getElementById("replace");
       let child = getFirstChild(parent);
+      
+      
       let response = getHttpJSON("http://www.omdbapi.com/?t=Workaholics&y=&plot=short&r=json");
-
+		/*
       // Creation de l'élément <ul> correspondant à la liste (media-list)
         var listItems = document.createElement("ul");
         listItems.setAttribute("class", "media-list");
         parent.replaceChild(listItems, child);
+        */
         
         // Creation de l'élément <li> correspondant à un item de la liste
         var item = document.createElement("li");
-        listItems.appendChild(item);
+        parent.appendChild(item);
+        
+        //parent.appendChild(listItems);
+		
         
         // Creation de l'élément <a> contenant la miniature
         var itemImageLink = document.createElement("a");
         itemImageLink.setAttribute("class", "pull-left thumbnail-size");
+        itemImageLink.setAttribute("href", "#");
         item.appendChild(itemImageLink);
         
         // Création de l'élément image de la miniature
@@ -150,61 +157,7 @@
         var itemBody = document.createElement("div");
         itemBody.setAttribute("class", "media-body");
         item.appendChild(itemBody);
-        
-        // Création de l'élément <h4> correspondant au titre
-        var itemBodyTitle = document.createElement("h4");
-        itemBodyTitle.setAttribute("class", "media-heading title");
-        itemBodyTitle.innerHTML = response.Title;
-        itemBody.appendChild(itemBodyTitle);
-        /*
-        // Création de l'élément <div> correspondant à la date
-        var itemBodyDate = document.createElement("div");
-        itemBodyDate.innerHTML = "le " + response.Released;
-        itemBody.appendChild(itemBodyDate);
-        
-        // Création de l'élément <div> correspondant à l'âge requis
-        var itemRated = document.createElement("div");
-        itemRated.innerHTML = "Âge requis : " + response.Rated;
-        itemBody.appendChild(itemRated);
-        
-        // Création de l'élément <div> correspondant à la durée
-        var itemRuntime = document.createElement("div");
-        itemRuntime.innerHTML = "Durée : " + response.Runtime;
-        itemBody.appendChild(itemRuntime);
-        
-        // Création de l'élément <div> correspondant au genre
-        var itemGenre = document.createElement("div");
-        itemGenre.innerHTML = "Genre : " + response.Genre;
-        itemBody.appendChild(itemGenre);
-        
-        // Création de l'élément <div> correspondant à la langue
-        var itemLanguage = document.createElement("div");
-        itemLanguage.innerHTML = "Âge requis : " + response.Language;
-        itemBody.appendChild(itemLanguage);
-        
-        // Création de l'élément <div> correspondant au pays
-        var itemCountry = document.createElement("div");
-        itemCountry.innerHTML = "Âge requis : " + response.Country;
-        itemBody.appendChild(itemCountry);
-        
-        // Création de l'élément <div> correspondant au titre de l'épisode
-        var itemBodyTitle = document.createElement("div");
-        itemBody.appendChild(itemBodyTitle);
-        var itemBodyTitleLink = document.createElement("a");
-        itemBodyTitleLink.setAttribute("href", response.URLEpisode12);
-        itemBodyTitleLink.innerHTML = response.TitleEpisode12;
-        itemBodyTitle.appendChild(itemBodyTitleLink);
-        
-        // Création de l'élément <div> correspondant à l'url
-        var itemBodyUrl = document.createElement("div");
-        itemBodyUrl.innerHTML = response.URLEpisode12;
-        itemBody.appendChild(itemBodyUrl);
-        
-        // Création de l'élément <div> correspondant à la description
-        var itemBodyDescription = document.createElement("div");
-        itemBodyDescription.innerHTML = response.SummaryEpisode12;
-        itemBody.appendChild(itemBodyDescription);
-	*/
+
         // Création de l'élément <div> correspondant aux caractéritiques du programme
         var moreInfos = document.createElement("div");
         itemBody.appendChild(moreInfos);
@@ -273,6 +226,11 @@
       parent.replaceChild(forReplace, child);
     }
     
+    function completeCalendarDetailed(xmlDocumentUrl, xslDocumentUrl)
+    {
+    	
+    }
+    
   </script>
 </head>
 
@@ -291,13 +249,13 @@
              onClick="infoAndButton3('fichiersPourAjax/calendar-short.xml', 'calendar-eventlist-workaholics.xsl')"/>
       <br/>
       <input id="myButton3" type="button" style="visibility: hidden" value="3. Display more info"
-             onClick="displayInfo('fichiersPourAjax/calendar-short.xml', 'calendar-eventlist-workaholics.xsl')"/>
+             onClick="displayInfo('fichiersPourAjax/calendar-short.xml', 'calendar-eventlist-workaholics.xsl', 'replace')"/>
       <br/>
       <input id="myButton4" type="button" value="4. All events"
              onClick="completeCalendar('fichiersPourAjax/calendar-full.xml', 'calendar-eventlist.xsl')"/>
       <br/>
       <input id="myButton5" type="button" value="5. All events detailled"
-             onClick=""/>
+             onClick="displayInfo('fichiersPourAjax/calendar-full.xml', 'calendar-eventlist.xsl', 'events')"/>
       <br/>
       <input id="myButton6" type="button" value="6. FILL (BONUS)"
              onClick=""/>
