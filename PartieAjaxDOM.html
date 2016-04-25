@@ -20,6 +20,33 @@
 
   <script type="text/javascript">
     // TODO : add our script !
+    function getFirstChild(n) {
+      let x = n.firstChild;
+      while ( x.nodeType != 1 ) { // Test if x is an element node (and not a text node or other)
+        x = x.nextSibling;
+      }
+      return x;
+    }
+
+    function getHttpXML(xmlDocumentUrl) {
+
+      var httpAjax;
+
+      httpAjax = window.XMLHttpRequest ?
+          new XMLHttpRequest() :
+          new ActiveXObject('Microsoft.XMLHTTP');
+
+      if (httpAjax.overrideMimeType) {
+        httpAjax.overrideMimeType('text/xml');
+      }
+
+      //chargement du fichier XML à l'aide de XMLHttpRequest synchrone (le 3° paramètre est défini à false)
+      httpAjax.open('GET', xmlDocumentUrl, false);
+      httpAjax.send();
+
+      return httpAjax.responseXML;
+    }
+
     function changeColor(emitter) {
       let toModify = window.document.getElementById("body");
       if(toModify.getAttribute("style")) {
@@ -32,6 +59,31 @@
       } else {
         emitter.setAttribute("style", "color: white;")
       }
+    }
+
+    function infoAndButton3(xmlDocumentUrl, xslDocumentUrl) {
+      // Hide or disply button 3
+      let button = window.document.getElementById("myButton3");
+      console.log(button.getAttribute("style"));
+      if(button.getAttribute("style").substr(0, 18) === "visibility: hidden") {
+        button.setAttribute("style", "visibility: visible;");
+      } else {
+        button.setAttribute("style", "visibility: hidden;");
+      }
+
+      // Hide or display infos
+      let doc = getHttpXML(xmlDocumentUrl);
+      let xsl = getHttpXML(xslDocumentUrl);
+      let xsltProc = new XSLTProcessor();
+      xsltProc.importStylesheet(xsl);
+
+      let formatedDoc = xsltProc.transformToDocument(doc);
+      let toReplace = window.document.getElementById("replace");
+      toReplace.replace(formatedDoc.getElementsByTagName("doc")[0]);
+
+
+
+      doc.getElementsByTagName("title");
     }
   </script>
 </head>
@@ -47,10 +99,10 @@
       <input id="myButton1" type="button" value="1. Change background color to blue and the color of this text in white"
              onClick="changeColor(this)"/>
       <br/>
-      <input id="myButton2" type="button" value="2. FILL"
-             onClick=""/>
+      <input id="myButton2" type="button" value="2. Infos and button3"
+             onClick="infoAndButton3('fichiersPourAjax/calendar-short.xml', 'calendar-eventlist-workaholics.xsl')"/>
       <br/>
-      <input id="myButton3" type="button" value="3. FILL"
+      <input id="myButton3" type="button" style="visibility: hidden" value="3. FILL"
              onClick=""/>
       <br/>
       <input id="myButton4" type="button" value="4. FILL"
@@ -66,6 +118,8 @@
              onClick=""/>
       <br/>
     </p>
+
+    <div id="repalce">This will be replaced by some infos.</div>
 
     <div>
       <h2 id="travail">Travail &agrave; r&eacute;aliser</h2>
