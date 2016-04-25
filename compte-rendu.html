@@ -19,6 +19,106 @@
 			<li> ? </li>
 		</ol>
 		<h1> Mise en forme avec XSLT </h1>
+		<h1> XQuery </h1>
+		<ol>
+			<li>
+				&ltphrases&gt <br/>
+				for $p in //phrase <br/>
+				order by $p <br/>
+				where $p/@langue = "fr" <br/>
+				return $p <br/>
+				&lt/phrases&gt
+			</li>
+			<br/>
+			<li>
+				&ltphrases&gt <br/>
+				for $p in //phrase <br/>
+				where contains($p, "mouton") and $p/@langue = "fr" <br/>
+				return $p <br/>
+				&lt/phrases&gt
+			</li>
+			<br/>
+			<li>
+				&ltparagr&gt <br/>
+				for $p in //paragr <br/>
+				let $n := count($p/phrase) <br/>
+				let $m := distinct-values($p/phrase/@modalite) <br/>
+				let $l := distinct-values($p/phrase/@locuteur) <br/>
+				return &ltparagr type = "{$p/@type}" nb_phrases = "{$n}" modalites = "{$m}" locuteurs = "{$l}"&gt&lt/paragr&gt <br/>
+				&lt/paragr&gt
+			</li>
+			<br/>
+			<li>
+				&ltparagr&gt <br/>
+				declare function local:phfr($p as element(paragr)) <br/>
+				as element(phrase)* <br/>
+				{ <br/>
+				  for $ph in $p/phrase <br/>
+				where $ph/@langue = "fr" <br/>
+				return $ph <br/>
+				}; <br/>
+				 <br/>
+				for $p in //paragr <br/>
+				return &ltparagr type = "{$p/@type}"&gt "{local:phfr($p)}" &lt/paragr&gt <br/>
+				&lt/paragr&gt
+			</li>
+			<br/>
+			<li>
+				&ltparagr&gt <br/>
+				declare function local:phfr($p as element(paragr)) <br/>
+				as element(phrase)* <br/>
+				{ <br/>
+				for $ph in $p/phrase <br/>
+				where $ph/@langue = "fr" <br/>
+				return $ph <br/>
+				}; <br/>
+				 <br/>
+				for $p in //paragr <br/>
+				return &ltparagr type = "{$p/@type}"&gt "{local:phfr($p)[2]}" &lt/paragr&gt <br/>
+				&lt/paragr&gt <br/>
+			</li>
+			<br/>
+			<li>
+				&ltphrases&gt <br/>
+				declare function local:phfr($p as element(paragr)) <br/>
+				as element(phrase)* <br/>
+				{ <br/>
+				for $ph in $p/phrase <br/>
+				where $ph/@langue = "fr" <br/>
+				return $ph <br/>
+				}; <br/>
+				 <br/>
+				for $p in //paragr <br/>
+				where $p/@type = "dialogue" <br/>
+				let $ph := local:phfr($p)[@locuteur = "Narrateur"] <br/>
+				return $ph <br/>
+				&lt/phrases&gt <br/>
+			</li>
+			<br/>
+			<li>
+				&ltphrases&gt <br/>
+				declare function local:phfrPP($p as element(paragr)) <br/>
+				as element(phrase)* <br/>
+				{ <br/>
+				for $ph in $p/phrase <br/>
+				where $ph/@langue = "fr" and $ph/@locuteur = "LePetitPrince" and contains($ph, "mouton") <br/>
+				return $ph <br/>
+				}; <br/>
+				 <br/>
+				declare function local:ph($root) <br/>
+				as element(phrase)* <br/>
+				{ <br/>
+				for $p in $root <br/>
+				let $ph := local:phfrPP($p) <br/>
+				return $ph <br/>
+				}; <br/>
+				 <br/>
+				let $ph := local:ph(//paragr) <br/>
+				return &ltphrases nb_phrases = "{count($ph)}"&gt "{$ph}" &lt/phrases&gt <br/>
+				&lt/phrases&gt
+			</li>
+		</ol>
+		<h1> DOM et Ajax </h1>
 	</body>
 	
 <html>
