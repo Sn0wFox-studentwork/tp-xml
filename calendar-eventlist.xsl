@@ -6,8 +6,17 @@
     <ul class="media-list">
       <xsl:for-each select="//event">
         <xsl:sort select="title"/>
+        <hr style="color: darkgray;"/>
         <li class="event">
-          <xsl:value-of select="title"/>
+          <div style="font-weight: bold;">
+            <xsl:value-of select="title"/>
+          </div>
+          <div>
+            <xsl:value-of select="summary"/>
+          </div>
+          <div>
+            <xsl:value-of select="description"/>
+          </div>
         </li>
       </xsl:for-each>
     </ul>
