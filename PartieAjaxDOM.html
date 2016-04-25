@@ -85,9 +85,6 @@
       let parent = window.document.getElementById("replace");
       let child = getFirstChild(parent);
       let forReplace = formatedDoc.getElementsByTagName("ul")[0];
-      console.log(parent);
-      console.log(forReplace);
-      console.log(getFirstChild(parent));
       parent.replaceChild(forReplace, child);
     }
 
@@ -101,11 +98,25 @@
       let parent = window.document.getElementById("events");
       let child = getFirstChild(parent);
       let forReplace = formatedDoc.getElementsByTagName("ul")[0];
+      parent.replaceChild(forReplace, child);
+    }
+
+    function bonusPrince(xmlDocumentUrl, xslDocumentUrl) {
+      let doc = getHttpXML(xmlDocumentUrl);
+      let xsl = getHttpXML(xslDocumentUrl);
+      let xsltProc = new XSLTProcessor();
+      xsltProc.importStylesheet(xsl);
+      let formatedDoc = xsltProc.transformToDocument(doc);
+
+      let parent = window.document.getElementById("prince");
+      let child = getFirstChild(parent);
+      let forReplace = formatedDoc.getElementsByTagName("div")[0];
       console.log(parent);
       console.log(forReplace);
       console.log(getFirstChild(parent));
       parent.replaceChild(forReplace, child);
     }
+
   </script>
 </head>
 
@@ -136,9 +147,22 @@
              onClick=""/>
       <br/>
       <input id="myButton7" type="button" value="7. FILL (BONUS)"
-             onClick=""/>
+             onClick="bonusPrince('petit_prince_3IF.xml', 'petit_prince.xsl')"/>
       <br/>
     </p>
+
+    <div id="prince">
+      <div id="princeButtons" style="text-align: center; visibility: hidden;">
+        <input id="princeButtonFr" type="button" value="Le Petit Prince en français"
+               onClick="printPrince('petit_prince_3IF.xml', 'petit_prince_bonus.xsl', 'fr')"/>
+        <span style="width: 5%"></span>
+        <input id="princeButtonHu" type="button" value="A kis herceg a magyar"
+               onClick="printPrince('petit_prince_3IF.xml', 'petit_prince_bonus.xsl', 'hu')"/>
+      </div>
+      <div>
+        This will be repaced by Le Petit Prince.
+      </div>
+    </div>
 
     <div id="replace">
       <span>
