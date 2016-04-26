@@ -110,7 +110,7 @@
         button.setAttribute("style", "visibility: hidden;");
       }
 
-      // Hide or display infos
+      // Display infos
       let doc = getHttpXML(xmlDocumentUrl);
       let xsl = getHttpXML(xslDocumentUrl);
       let xsltProc = new XSLTProcessor();
@@ -125,7 +125,10 @@
     
     function displayInfo (xmlDocumentUrl, xslDocumentUrl, zone)
     {
-	  let document = getHttpXML(xmlDocumentUrl);
+      if(window.document.getElementsByClassName("apieceofevent").length !== 0) {
+        return;
+      }
+      let document = getHttpXML(xmlDocumentUrl);
       let xsl = getHttpXML(xslDocumentUrl);
       let xsltProc = new XSLTProcessor();
       xsltProc.importStylesheet(xsl);
@@ -142,6 +145,7 @@
         
         // Creation de l'élément <li> correspondant à un item de la liste
         var item = document.createElement("li");
+        item.setAttribute("class", "apieceofevent");
         parent.appendChild(item);
         
         //parent.appendChild(listItems);
