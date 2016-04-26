@@ -8,7 +8,7 @@
         <xsl:sort select="title"/>
         <hr style="color: darkgray;"/>
         <li class="event">
-          <div style="font-weight: bold;">
+          <div class="title" style="font-weight: bold;">
             <xsl:value-of select="title"/>
           </div>
           <div>

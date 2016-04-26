@@ -294,8 +294,9 @@
       let xsl = getHttpXML(xslDocumentUrl);
       let events = document.getElementsByTagName("event")
       let existingEvents = window.document.getElementsByClassName("event");
-
+	  
       /* TESTS */
+      /*
       let item = existingEvents[0];
 
       // TODO : faire la requete; elle est simule ici par l'image mouton.png
@@ -311,19 +312,16 @@
       itemImage.setAttribute("class", "media-object img-thumbnail responsive");
       itemImage.setAttribute("src", "image/mouton.png");
       itemImageLink.appendChild(itemImage);
-      /**/
+      */
 
-      /*for(let i = 0; i<events.length; i++)
+      for(let i = 0; i<events.length; i++)
       {
-        let title = events[i].getElementsByTagName("title")[0].innerHTML;   // [i] then [0], yes we want the first and only one title
+        let title = existingEvents[i].getElementsByClassName("title")[0].innerHTML;   // [i] then [0], yes we want the first and only one title
         let url = "http://www.omdbapi.com/?t="+title+"&y=&plot=short&r=json";
         let response = getHttpJSON(url);
 
         // Creation de l'élément <li> correspondant à un item de la liste
-        var item = document.createElement("li");
-        events[i].appendChild(item);
-
-        //parent.appendChild(listItems);
+        var item = existingEvents[i];
 
 
         // Creation de l'élément <a> contenant la miniature
@@ -399,7 +397,7 @@
         moreInfos.appendChild(imdbRatingLabel);
         moreInfos.appendChild(document.createTextNode (" "));
         moreInfos.appendChild(imdbVotesLabel);
-      }*/
+      }
 
       /* CODE EXAMPLE
       let uid = parent[0].getAttribute("uid");  // Useless for the api we are using
