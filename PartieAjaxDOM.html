@@ -141,8 +141,6 @@
         var item = document.createElement("li");
         item.setAttribute("class", "apieceofevent");
         parent.appendChild(item);
-        
-        //parent.appendChild(listItems);
 		
         
         // Creation de l'élément <a> contenant la miniature
@@ -282,6 +280,10 @@
 
     function completeCalendarDetailed(xmlDocumentUrl, xslDocumentUrl)
     {
+      if(window.document.getElementsByClassName("completeevent").length !== 0) {
+        return;
+      }
+      
       let document = getHttpXML(xmlDocumentUrl);
       let xsl = getHttpXML(xslDocumentUrl);
       let events = document.getElementsByTagName("event");
@@ -293,7 +295,7 @@
         return;
       }
 
-      for(let i = 0; i<events.length; i++)
+      for(let i = 0; i<existingEvents.length; i++)
       {
         let title = existingEvents[i].getElementsByClassName("title")[0].innerHTML;   // [i] then [0], yes we want the first and only one title
         let url = "http://www.omdbapi.com/?t="+title+"&y=&plot=short&r=json";
@@ -303,6 +305,8 @@
         var item = existingEvents[i];
         item.setAttribute("class", "event detailled");
 
+        var item = existingEvents[i];
+        item.setAttribute("class", "completeevent");
 
         // Creation de l'élément <a> contenant la miniature
         var itemImageLink = document.createElement("a");
