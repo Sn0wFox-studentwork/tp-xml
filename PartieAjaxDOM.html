@@ -227,8 +227,15 @@
 
     let displayHu = false;
     let displayFr = false;
+    let displayStoryButtons = false;
 
     function bonusPrince(xmlDocumentUrl, xslDocumentUrl) {
+      displayStoryButtons = !displayStoryButtons;
+      if(displayStoryButtons) {
+        window.document.getElementById("myButton7").setAttribute("value", "7. Hide Le Petit Prince (BONUS)");
+      } else {
+        window.document.getElementById("myButton7").setAttribute("value", "7. Display Le Petit Prince (BONUS)");
+      }
       let textalign = "text-align: center;";
       let button = window.document.getElementById("princeButtons");
       if(button.getAttribute("style").substr(0, 18) === "visibility: hidden") {
@@ -274,7 +281,6 @@
         window.document.getElementById("myButton7").setAttribute("value", "7. Hide Le Petit Prince (BONUS)");
       } else {
         storyBloc.setAttribute("hidden", "");
-        window.document.getElementById("myButton7").setAttribute("value", "7. Display Le Petit Prince (BONUS)");
       }
     }
 
