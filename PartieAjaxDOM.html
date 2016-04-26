@@ -293,19 +293,100 @@
 
     function completeCalendarDetailed(xmlDocumentUrl, xslDocumentUrl)
     {
-      let doc = getHttpXML(xmlDocumentUrl);
-      let xsl = getHttpXML(xslDocumentUrl);
-      let xsltProc = new XSLTProcessor();
-      xsltProc.importStylesheet(xsl);
-      //let formatedDoc = xsltProc.transformToDocument(doc); TODO : useful ?
+        let document = getHttpXML(xmlDocumentUrl);
+        let xsl = getHttpXML(xslDocumentUrl);
+        let xsltProc = new XSLTProcessor();
+        xsltProc.importStylesheet(xsl);
+        //let formatedDoc = xsltProc.transformToDocument(doc); TODO : useful ?
 
-      let events = doc.getElementsByTagName("event"); // TODO : care !
-      console.log(events);
-      for(let i = 0; i<events.length; i++) {
-        let title = events[i].getElementsByTagName("title")[0].innerHTML;   // [i] then [0], yes we want the first and only one title
-        let url = "http://www.omdbapi.com/?t="+title+"&y=&plot=short&r=json";
-        let response = getHttpJSON(url);
-        // TODO(alex) : do something with response
+        let events = document.getElementsByTagName("event"); // TODO : care !
+        
+        for(let i = 0; i<events.length; i++)
+        {
+		    let title = events[i].getElementsByTagName("title")[0].innerHTML;   // [i] then [0], yes we want the first and only one title
+		    let url = "http://www.omdbapi.com/?t="+title+"&y=&plot=short&r=json";
+		    let response = getHttpJSON(url);
+		    
+		    // Creation de l'élément <li> correspondant à un item de la liste
+		    var item = document.createElement("li");
+		    events[i].appendChild(item);
+		    
+		    //parent.appendChild(listItems);
+		
+		    
+		    // Creation de l'élément <a> contenant la miniature
+		    var itemImageLink = document.createElement("a");
+		    itemImageLink.setAttribute("class", "pull-left thumbnail-size");
+		    itemImageLink.setAttribute("href", "#");
+		    item.appendChild(itemImageLink);
+		    
+		    // Création de l'élément image de la miniature
+		    var itemImage = document.createElement("img");
+		    itemImage.setAttribute("class", "media-object img-thumbnail responsive");
+		    itemImage.setAttribute("src", response.Poster);
+		    itemImageLink.appendChild(itemImage);
+		    
+		    // Création de l'élément <div> correspondant à la description (media-body)
+		    var itemBody = document.createElement("div");
+		    itemBody.setAttribute("class", "media-body");
+		    item.appendChild(itemBody);
+
+		    // Création de l'élément <h4> correspondant au titre
+		    var itemBodyTitle = document.createElement("h4");
+		    itemBodyTitle.setAttribute("class", "media-heading title");
+		    itemBodyTitle.innerHTML = response.Title;
+		    itemBody.appendChild(itemBodyTitle);
+
+		    // Création de l'élément <div> correspondant aux caractéritiques du programme
+		    var moreInfos = document.createElement("div");
+		    itemBody.appendChild(moreInfos);
+		    
+		    // Création des labels
+		    var yearLabel = document.createElement("span");
+		    yearLabel.setAttribute("class", "label label-default");
+		    yearLabel.innerHTML = response.Year;
+		    var ratedLabel = document.createElement("span");
+		    ratedLabel.setAttribute("class", "label label-default");
+		    ratedLabel.innerHTML = response.Rated;
+		    var releasedLabel = document.createElement("span");
+		    releasedLabel.setAttribute("class", "label label-default");
+		    releasedLabel.innerHTML = response.Released;
+		    var runtimeLabel = document.createElement("span");
+		    runtimeLabel.setAttribute("class", "label label-default");
+		    runtimeLabel.innerHTML = response.Runtime;
+		    var genreLabel = document.createElement("span");
+		    genreLabel.setAttribute("class", "label label-default");
+		    genreLabel.innerHTML = response.Genre;
+		    var languageLabel = document.createElement("span");
+		    languageLabel.setAttribute("class", "label label-default");
+		    languageLabel.innerHTML = response.Language;
+		    var countryLabel = document.createElement("span");
+		    countryLabel.setAttribute("class", "label label-default");
+		    countryLabel.innerHTML = response.Country;
+		    var imdbRatingLabel = document.createElement("span");
+		    imdbRatingLabel.setAttribute("class", "label label-default");
+		    imdbRatingLabel.innerHTML = response.imdbRating;
+		    var imdbVotesLabel = document.createElement("span");
+		    imdbVotesLabel.setAttribute("class", "label label-default");
+		    imdbVotesLabel.innerHTML = response.imdbVotes;
+		  
+		    moreInfos.appendChild(yearLabel);
+		    moreInfos.appendChild(document.createTextNode (" "));
+		    moreInfos.appendChild(ratedLabel);
+		    moreInfos.appendChild(document.createTextNode (" "));
+		    moreInfos.appendChild(releasedLabel);
+		    moreInfos.appendChild(document.createTextNode (" "));
+		    moreInfos.appendChild(runtimeLabel);
+		    moreInfos.appendChild(document.createTextNode (" "));
+		    moreInfos.appendChild(genreLabel);
+		    moreInfos.appendChild(document.createTextNode (" "));
+		    moreInfos.appendChild(languageLabel);
+		    moreInfos.appendChild(document.createTextNode (" "));
+		    moreInfos.appendChild(countryLabel);
+		    moreInfos.appendChild(document.createTextNode (" "));
+		    moreInfos.appendChild(imdbRatingLabel);
+		    moreInfos.appendChild(document.createTextNode (" "));
+		    moreInfos.appendChild(imdbVotesLabel);
       }
 
       /* CODE EXAMPLE
