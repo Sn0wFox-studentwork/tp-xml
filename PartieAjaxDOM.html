@@ -136,12 +136,6 @@
       let parent = window.document.getElementById("replace");
       
       let response = getHttpJSON("http://www.omdbapi.com/?t=Workaholics&y=&plot=short&r=json");
-		/*
-      // Creation de l'élément <ul> correspondant à la liste (media-list)
-        var listItems = document.createElement("ul");
-        listItems.setAttribute("class", "media-list");
-        parent.replaceChild(listItems, child);
-        */
         
         // Creation de l'élément <li> correspondant à un item de la liste
         var item = document.createElement("li");
@@ -167,12 +161,6 @@
         var itemBody = document.createElement("div");
         itemBody.setAttribute("class", "media-body");
         item.appendChild(itemBody);
-
-        // Création de l'élément <h4> correspondant au titre
-        var itemBodyTitle = document.createElement("h4");
-        itemBodyTitle.setAttribute("class", "media-heading title");
-        itemBodyTitle.innerHTML = response.Title;
-        itemBody.appendChild(itemBodyTitle);
 
         // Création de l'élément <div> correspondant aux caractéritiques du programme
         var moreInfos = document.createElement("div");
@@ -296,27 +284,14 @@
     {
       let document = getHttpXML(xmlDocumentUrl);
       let xsl = getHttpXML(xslDocumentUrl);
-      let events = document.getElementsByTagName("event")
+      let events = document.getElementsByTagName("event");
       let existingEvents = window.document.getElementsByClassName("event");
-	  
-      /* TESTS */
-      /*
-      let item = existingEvents[0];
-
-      // TODO : faire la requete; elle est simule ici par l'image mouton.png
-
-      // Creation de l'élément <a> contenant la miniature
-      var itemImageLink = document.createElement("a");
-      itemImageLink.setAttribute("class", "pull-left thumbnail-size");
-      itemImageLink.setAttribute("href", "#");
-      item.appendChild(itemImageLink);
-
-      // Création de l'élément image de la miniature
-      var itemImage = document.createElement("img");
-      itemImage.setAttribute("class", "media-object img-thumbnail responsive");
-      itemImage.setAttribute("src", "image/mouton.png");
-      itemImageLink.appendChild(itemImage);
-      */
+      if(existingEvents.length === 0) {
+        completeCalendar(xmlDocumentUrl, xslDocumentUrl);
+      }
+      if(window.document.getElementsByClassName("detailled").length !== 0) {
+        return;
+      }
 
       for(let i = 0; i<events.length; i++)
       {
@@ -324,8 +299,9 @@
         let url = "http://www.omdbapi.com/?t="+title+"&y=&plot=short&r=json";
         let response = getHttpJSON(url);
 
-        // Creation de l'élément <li> correspondant à un item de la liste
+        // Recuperation de l'élément <li> correspondant à un item de la liste
         var item = existingEvents[i];
+        item.setAttribute("class", "event detailled");
 
 
         // Creation de l'élément <a> contenant la miniature
